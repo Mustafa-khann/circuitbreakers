@@ -31,7 +31,7 @@ function App() {
           <h1 className="glitch" data-text={glitchText}>{glitchText}</h1>
           <p className="subtext">Welcome to Grid City, 2077</p>
           <button className="cyberpunk-button" onClick={handleShowFinalDestination}>
-            JACK IN
+            BOOOM!
           </button>
         </div>
       ) : (
