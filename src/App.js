@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   const [showFinalDestination, setShowFinalDestination] = useState(false);
   const [glitchText, setGlitchText] = useState('DATA PHANTOMS');
+  const [copySuccess, setCopySuccess] = useState('');
 
   const handleShowFinalDestination = () => {
     setShowFinalDestination(true);
@@ -23,6 +24,16 @@ function App() {
 
   const encodedMessage = "V2VsbCBkb25lLCBDaXJjdWl0IEJyZWFrZXJzISBZb3XigJl2ZSBzdWNjZXNzZnVsbHkgY29ubmVjdGVkIHRoZSBkb3RzIGFuZCB1bmNvdmVyZWQgdGhlIGhpZGRlbiBtZXNzYWdlOiAnSW5ub3ZhdGlvbiBzcGFya3Mgd2hlcmUgY2lyY3VpdHMgY29udmVyZ2UuJyBZb3VyIGFiaWxpdHkgdG8gcG93ZXIgdGhyb3VnaCBjaGFsbGVuZ2VzIGhhcyBpbGx1bWluYXRlZCB0aGUgcGF0aCBmb3J3YXJkLiBDZWxlYnJhdGUgdGhpcyBhY2hpZXZlbWVudCBhbmQga2VlcCBicmVha2luZyBuZXcgZ3JvdW5kIQ==";
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(encodedMessage);
+      setCopySuccess('Copied!');
+      setTimeout(() => setCopySuccess(''), 2000);
+    } catch (err) {
+      setCopySuccess('Failed to copy');
+    }
+  };
+
   return (
     <div className="App">
       <div className="cyberpunk-background"></div>
@@ -36,7 +47,17 @@ function App() {
         </div>
       ) : (
         <div className="encoded-message">
-          <p className="message-body">{encodedMessage}</p>
+          <textarea
+            className="message-body"
+            readOnly
+            value={encodedMessage}
+          />
+          <div className="copy-container">
+            <button className="cyberpunk-button copy-button" onClick={copyToClipboard}>
+              Copy Message
+            </button>
+            {copySuccess && <span className="copy-success">{copySuccess}</span>}
+          </div>
         </div>
       )}
     </div>
